@@ -1,0 +1,43 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: bundle exec puma -p 3000
+    ports:
+      - 3000
+    volumes:
+      - .:/app
+    volumes_from:
+      - bundle-data
+    links:
+      - db
+    environment:
+      BUNDLE_JOBS: 8
+      BUNDLE_PATH: /bundle
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_URL: postgresql://db
+      DATABASE_NAME: <<APP_NAME>>
+      PORT: 3000
+
+  bundle-data:
+    image: busybox
+    volumes:
+      - /bundle
+  db:
+    image: postgres
+    ports:
+      - 5432
+    volumes_from:
+      - db-data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  db-data:
+    image: busybox
+    volumes:
+      - /var/lib/postgresql/data
+    command: "true"
