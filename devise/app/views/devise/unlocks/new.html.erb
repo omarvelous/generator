@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card">
+        <h3 class="card-header">Unlock</h3>
+        <div class="card-block">
+          <%= form_for(resource, as: resource_name, url: [resource_name, :unlock], html: { method: :post }) do |f| %>
+            <%= devise_error_messages! %>
+
+            <div class="form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit("Resend unlock instructions", class: 'btn btn-primary btn-block') %>
+            </div>
+          <% end %>
+        </div>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
