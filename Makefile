@@ -1,4 +1,4 @@
-build: init bundle rails override
+build: init bundle rails overrides
 
 init:
 	$(info >>>> Making dir)
@@ -17,7 +17,7 @@ rails:
 	cd ../$(n); make r c="new . --force --database=postgresql --skip-bundle --skip-gemfile"
 	cd ../$(n); git add .; git commit -m "rails new"
 
-override:
+overrides:
 	$(info >>>> Copying overrides)
 	cp -rf overrides/* ../$(n)
 	cd ../$(n); grep -ilr '<<APP_NAME>>' * | xargs -I@ sed -i '' 's/<<APP_NAME>>/'"$(n)"'/g' @
